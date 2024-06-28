@@ -3,7 +3,7 @@ import pandas as pd
 
 def main() :
   st.write('Minimal Example')
-  st.header('This is Header')
+  st.header('Halaman Streamlit Muhammad Hadiyan Ridho')
   st.subheader('This is SubHeader')
   st.markdown('# Rendering Markdown ')
   st.write('Some Phytagorean Equation : ')
