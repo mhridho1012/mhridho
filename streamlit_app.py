@@ -3,7 +3,7 @@ import pandas as pd
 import requests
 from st_aggrid import AgGrid
 import matplotlib.animation as animation
-from PIL import Image
+from PIL import Image, UnidentifiedImageError
 from io import BytesIO
 
 # Baca dataframe dari file CSV
@@ -24,23 +24,43 @@ def main() :
 if __name__ == '__main__' :
   main()
 
-  #Fungsi untuk mengupdate plot
+ # Fungsi untuk mengupdate plot
 def update_plot(frame, img, implot):
     implot.set_array(np.rot90(img, frame))
     return [implot]
 
-# Mengunduh gambar dari URL
-url = 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Example.jpg/320px-Example.jpg'  # Ganti dengan URL gambar yang diinginkan
-response = requests.get(url)
-img = Image.open(BytesIO(response.content))
-img = np.array(img)
+# URL yang ingin Anda gunakan
+url = 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Example.jpg/320px-Example.jpg'
 
-# Membuat figure dan axis
-fig, ax = plt.subplots()
-implot = ax.imshow(img)
+try:
+    # Mengunduh gambar dari URL
+    response = requests.get(url)
+    response.raise_for_status()  # Memeriksa jika respons sukses
 
-# Membuat animasi
-ani = animation.FuncAnimation(fig, update_plot, frames=range(4), fargs=(img, implot), interval=200)
+    # Membaca gambar menggunakan PIL
+    img = Image.open(BytesIO(response.content))
+    img = np.array(img)
 
+    # Membuat figure dan axis
+    fig, ax = plt.subplots()
+    implot = ax.imshow(img)
 
+    # Membuat animasi
+    ani = animation.FuncAnimation(fig, update_plot, frames=range(4), fargs=(img, implot), interval=200)
+
+    # Menyimpan animasi sebagai file HTML
+    ani.save('animation.html', writer='html')
+
+    # Membaca file HTML dan menampilkannya di Streamlit
+    html_file = open('animation.html', 'r').read()
+    st.components.v1.html(html_file, height=300, width=300)
+
+except requests.exceptions.RequestException as e:
+    st.error(f"Error during request: {e}")
+
+except UnidentifiedImageError as e:
+    st.error(f"Error identifying image: {e}")
+
+except Exception as e:
+    st.error(f"An error occurred: {e}")
 
