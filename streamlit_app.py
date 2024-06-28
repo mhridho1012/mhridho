@@ -24,7 +24,7 @@ def main() :
 if __name__ == '__main__' :
   main()
 
- # Fungsi untuk mengupdate plot
+# Fungsi untuk mengupdate plot
 def update_plot(frame, img, implot):
     implot.set_array(np.rot90(img, frame))
     return [implot]
@@ -33,8 +33,13 @@ def update_plot(frame, img, implot):
 url = 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Example.jpg/320px-Example.jpg'
 
 try:
-    # Mengunduh gambar dari URL
-    response = requests.get(url)
+    # Headers dengan User-Agent
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+    }
+
+    # Mengunduh gambar dari URL dengan headers
+    response = requests.get(url, headers=headers)
     response.raise_for_status()  # Memeriksa jika respons sukses
 
     # Membaca gambar menggunakan PIL
