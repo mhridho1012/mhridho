@@ -5,21 +5,6 @@ from st_aggrid import AgGrid
 # Baca dataframe dari file CSV
 titanic = pd.read_csv('https://raw.githubusercontent.com/mofdac/-materi-das/main/01.%20Python%20for%20DA/titanic.csv')
 
-# Read JSON file dari data covid dengan penanganan kesalahan
-try:
-    response = requests.post('https://forecastpassengerapi.herokuapp.com/forecast_timeseries', json={
-        "month_limit": "2020-01-01",
-        "window_size": 12
-    })
-    response.raise_for_status()  # Memeriksa status kode HTTP
-    flight_passanger_api = response.json()
-except requests.exceptions.RequestException as e:
-    st.error(f"Error during HTTP request: {e}")
-    flight_passanger_api = {}
-except ValueError as e:
-    st.error(f"Error parsing JSON: {e}")
-    flight_passanger_api = {}
-
 def main() :
   st.write('Minimal Example')
   st.header('Halaman Streamlit Muhammad Hadiyan Ridho')
