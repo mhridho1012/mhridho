@@ -16,18 +16,4 @@ if __name__ == '__main__' :
 
 
 
-# Membuat data animasi
-x = np.linspace(0, 2 * np.pi, 100)
-frames = [go.Frame(data=[go.Scatter(x=x, y=np.sin(x + phase))]) for phase in np.linspace(0, 2 * np.pi, 30)]
-
-# Membuat figure
-fig = go.Figure(
-    data=[go.Scatter(x=x, y=np.sin(x), mode="lines")],
-    layout=go.Layout(
-        updatemenus=[dict(type="buttons", buttons=[dict(label="Play", method="animate", args=[None])])]),
-    frames=frames
-)
-
-# Menampilkan animasi di Streamlit
-st.plotly_chart(fig)
 
