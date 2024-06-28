@@ -2,11 +2,6 @@ import streamlit as st
 import pandas as pd
 import requests
 from st_aggrid import AgGrid
-#import numpy as np
-#import matplotlib.pyplot as plt
-#import matplotlib.animation as animation
-#from PIL import Image, UnidentifiedImageError
-#from io import BytesIO
 
 # Baca dataframe dari file CSV
 house = pd.read_csv('house_clean.csv')
