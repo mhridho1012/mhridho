@@ -16,6 +16,24 @@ def main() :
   # Contoh input untuk fitur-fitur yang ingin diprediksi
   feature1 = st.number_input('Masukkan nilai fitur 1')
   feature2 = st.number_input('Masukkan nilai fitur 2')
+  
+  # Judul aplikasi
+  st.title('Logistic Regression Model')
+
+  # Function to display model intercept and coefficients
+  def display_model_params(model):
+    st.subheader('Model Intercept:')
+    st.write(model.intercept_)
+
+    st.subheader('Model Coefficients:')
+    coef_data = {'Feature': X.columns, 'Coefficient': model.coef_}
+    coef_df = pd.DataFrame(coef_data)
+    st.write(coef_df)
+
+
+  # Displaying model parameters using Streamlit
+  st.title('Linear Regression Model Parameters')
+  display_model_params(model_lr)
 
 if __name__ == '__main__' :
   main()
